@@ -8,20 +8,9 @@ export default defineConfig([
             format: 'cjs',
             file: 'lib/index.js'
         },
+        external:['koa','koa-router'],
         plugins: [
             ts()
-        ]
-    },
-    {
-        input: "src/index.ts",
-        output: {
-            format: 'esm',
-            file: 'lib/index.mjs'
-        },
-        plugins: [
-            ts({
-                tsconfig: resolvedConfig => ({...resolvedConfig, declaration: false})
-            })
         ]
     },
     {
@@ -30,6 +19,7 @@ export default defineConfig([
             format: 'cjs',
             file: 'lib/cli.js'
         },
+        external:['koa','koa-router'],
         plugins: [
             ts({
                 tsconfig: resolvedConfig => ({...resolvedConfig, declaration: false})
