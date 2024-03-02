@@ -23,5 +23,15 @@ export default defineConfig([
                 tsconfig: resolvedConfig => ({...resolvedConfig, declaration: false})
             })
         ]
+    },
+    {
+        input: "src/cmdline.ts",
+        output: {
+            format: 'cjs',
+            file: 'lib/cli.js'
+        },
+        plugins: [
+            ts()
+        ]
     }
 ]);
