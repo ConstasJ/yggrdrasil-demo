@@ -31,3 +31,5 @@ Token.init({
 });
 
 Token.sync({alter: true});
+
+export { Token };

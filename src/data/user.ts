@@ -29,4 +29,4 @@ User.init({
 
 User.sync({alter: true});
 
-export { User as Player };
+export { User };

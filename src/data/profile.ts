@@ -38,3 +38,5 @@ Profile.init({
 });
 
 Profile.sync({alter:true});
+
+export { Profile };
