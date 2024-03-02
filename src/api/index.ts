@@ -15,6 +15,14 @@ class ApiServer {
         this.app.use(mainRouter.routes());
         this.app.use(mainRouter.allowedMethods())
     }
+
+    public start():void;
+    public start(port?: number):void{
+        if(!port) port = 18030;
+        this.app.listen(port,()=>{
+            console.log(`Server is running on port ${port}`);
+        });
+    }
 }
 
 export default ApiServer;
