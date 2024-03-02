@@ -3,7 +3,7 @@ import { db } from "./init";
 
 type TextureType = 'SKIN'|'CAPE';
 type Texture = {
-    [key in keyof TextureType]: string
+    [key in TextureType]: string
 }
 
 class Profile extends Model {
