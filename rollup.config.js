@@ -31,7 +31,9 @@ export default defineConfig([
             file: 'lib/cli.js'
         },
         plugins: [
-            ts()
+            ts({
+                tsconfig: resolvedConfig => ({...resolvedConfig, declaration: false})
+            })
         ]
     }
 ]);
