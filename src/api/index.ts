@@ -1,5 +1,7 @@
 import Koa from 'koa';
 import router from 'koa-router';
+import bodyParser from 'koa-bodyparser';
+
 import { authApi } from './auth';
 import { authServerApi } from './authserver';
 
@@ -8,6 +10,7 @@ class ApiServer {
 
     constructor() {
         this.app = new Koa();
+        this.app.use(bodyParser())
         const mainRouter = new router();
         mainRouter.use('/auth',authApi.routes(),authApi.allowedMethods());
         mainRouter.use('/authserver',authServerApi.routes(),authServerApi.allowedMethods());
