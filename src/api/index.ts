@@ -1,6 +1,7 @@
 import Koa from 'koa';
 import router from 'koa-router';
 import { authApi } from './auth';
+import { authServerApi } from './authserver';
 
 class ApiServer {
     private app: Koa;
@@ -9,6 +10,7 @@ class ApiServer {
         this.app = new Koa();
         const mainRouter = new router();
         mainRouter.use('/auth',authApi.routes(),authApi.allowedMethods());
+        mainRouter.use('/authserver',authServerApi.routes(),authServerApi.allowedMethods());
         mainRouter.get('/',(ctx)=>{
             ctx.body = 'Hello World';
         })
