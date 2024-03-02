@@ -1,9 +1,5 @@
-import { Context } from "koa";
+import Router from 'koa-router';
 
-async function authApi(ctx: Context){
-    if(ctx.url === '/authserver'){
-        ctx.body = 'authApi';
-    }
-}
+const authApi = new Router();
 
 export { authApi }
