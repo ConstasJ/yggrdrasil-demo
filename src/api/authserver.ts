@@ -2,7 +2,8 @@ import Router from "koa-router";
 import bcrypt from "bcrypt";
 
 import { AuthenticateRequest } from "../types";
-import { Profile, User } from "../data";
+import { Profile, Token, User } from "../data";
+import { generateAcessToken } from "../utils";
 
 const authServerApi = new Router();
 
@@ -19,23 +20,23 @@ authServerApi.post("/authenticate", async (ctx) => {
                 },
             });
             if(!user){
-                ctx.status = 404;
+                ctx.status = 403;
                 ctx.body = {
-                    error: "EUNFUND",
-                    errorMessage: "User not found",
+                    error: "ForbiddenOperationException",
+                    errorMessage: "Invalid credentials. Invalid username or password.",
                 };
                 return;
             }
             const passwordMatch = await bcrypt.compare(body.password, user.password);
             if(!passwordMatch){
-                ctx.status = 401;
+                ctx.status = 403;
                 ctx.body = {
-                    error: "EPASSERR",
-                    errorMessage: "Wrong password",
+                    error: "ForbiddenOperationException",
+                    errorMessage: "Invalid credentials. Invalid username or password.",
                 };
                 return;
             }
-            
+            const accessToken = generateAcessToken();
         }
     } catch (e) {
         ctx.status = 500;
