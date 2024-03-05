@@ -20,7 +20,7 @@ Token.init({
     },
     playerUUID: {
         type: DataTypes.UUID,
-        allowNull: false,
+        allowNull: true,
     },
     issuedTime: {
         type: DataTypes.DATE,
