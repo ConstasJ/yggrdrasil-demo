@@ -8,6 +8,7 @@ type Texture = {
 
 class Profile extends Model {
     declare public id: string;
+    declare public pid: string;
     declare public name: string;
     declare public model: 'default' | 'slim';
     declare public texture: Texture;
@@ -19,6 +20,10 @@ Profile.init({
         primaryKey: true,
         allowNull: false,
         defaultValue: DataTypes.UUIDV4,
+    },
+    pid: {
+        type: DataTypes.UUID,
+        allowNull: false,
     },
     name: {
         type: DataTypes.STRING,
