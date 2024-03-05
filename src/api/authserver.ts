@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 
 import { AuthenticateRequest } from "../types";
 import { Profile, Token, User } from "../data";
-import { generateAcessToken } from "../utils";
+import { generateAcessToken, userSerialize } from "../utils";
 
 const authServerApi = new Router();
 
@@ -37,6 +37,33 @@ authServerApi.post("/authenticate", async (ctx) => {
                 return;
             }
             const accessToken = generateAcessToken();
+            const profiles = await Profile.findAll({
+                where: {
+                    pid: user.id
+                },
+            });
+            let selectedProfile: Profile | Record<string,any> = {};
+            const availableProfiles : Profile[] = [];
+            if(profiles.length === 1){
+                selectedProfile = profiles[0];
+            } else if(profiles.length > 1) {
+                availableProfiles.push(...profiles);
+            }
+            const responseBody = {
+                accessToken,
+                clientToken: body.clientToken,
+                selectedProfile,
+                availableProfiles,
+                user: body.requestUser?userSerialize(user):{}
+            };
+            await Token.create({
+                accessToken,
+                clientToken: body.clientToken,
+                playerUUID: selectedProfile.id || null,
+                issuedTime: new Date(),
+            });
+            ctx.status = 200;
+            ctx.body = responseBody;
         }
     } catch (e) {
         ctx.status = 500;
